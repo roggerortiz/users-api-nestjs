@@ -15,12 +15,16 @@
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
   },
   "dependencies": {
+    "@formkit/tempo": "0.1.2",
     "@nestjs/common": "11.0.1",
     "@nestjs/config": "4.0.2",
     "@nestjs/core": "11.0.1",
+    "@nestjs/mapped-types": "*",
+    "@nestjs/mongoose": "11.0.3",
     "@nestjs/platform-express": "11.0.1",
     "@swc/cli": "0.7.8",
     "@swc/core": "1.13.5",
+    "mongoose": "8.18.3",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1"
   },
