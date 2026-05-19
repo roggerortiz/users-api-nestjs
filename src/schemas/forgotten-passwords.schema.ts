@@ -4,16 +4,26 @@ import { RecordLog, RecordLogSchema } from './record-logs.schema';
 
 export type ForgottenPasswordDocument = HydratedDocument<ForgottenPassword>;
 
-@Schema({ versionKey: false })
+@Schema({
+  versionKey: false,
+  toJSON: {
+    transform: (_, ret: any) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.recordLog;
+      return ret;
+    },
+  },
+})
 export class ForgottenPassword {
   @Prop({ required: true })
-  email: string;
+  email!: string;
 
   @Prop({ required: true })
-  token: string;
+  token!: string;
 
   @Prop({ schema: RecordLogSchema, required: true })
-  recordLog: RecordLog;
+  recordLog!: RecordLog;
 }
 
 export const ForgottenPasswordSchema =

@@ -6,9 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
+import { QueryParamsPipe } from 'pipes/query-params.pipe';
 import { UsersService } from 'services/users.service';
 import { CreateUserDto } from 'types/dtos/users/create-user.dto';
+import { FindAllUsersDto } from 'types/dtos/users/find-all-users.dto';
 import { RemoveUserDto } from 'types/dtos/users/remove-user.dto';
 import { UpdateUserDto } from 'types/dtos/users/update-user.dto';
 
@@ -17,8 +20,14 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query(QueryParamsPipe) queryParams: Record<string, any>) {
+    const dto: FindAllUsersDto = {};
+
+    if (Object.prototype.hasOwnProperty.call(queryParams, 'freetext')) {
+      dto.FreeText = queryParams['freetext'] as string;
+    }
+
+    return this.usersService.findAll(dto);
   }
 
   @Get(':id')

@@ -4,6 +4,7 @@ import { CryptoHelper } from 'helpers/crypto.helper';
 import { Model, RootFilterQuery, UpdateQuery } from 'mongoose';
 import { User, UserDocument } from 'schemas/users.schema';
 import { CreateUserDto } from 'types/dtos/users/create-user.dto';
+import { FindAllUsersDto } from 'types/dtos/users/find-all-users.dto';
 import { RemoveUserDto } from 'types/dtos/users/remove-user.dto';
 import { UpdateUserDto } from 'types/dtos/users/update-user.dto';
 import { AccountState } from 'types/enums/account-state';
@@ -17,8 +18,8 @@ export class UsersService {
     private readonly cryptoHelper: CryptoHelper,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async findAll(dto: FindAllUsersDto): Promise<User[]> {
+    return this.userModel.find(dto).exec();
   }
 
   async findOne(id: string): Promise<User | null> {

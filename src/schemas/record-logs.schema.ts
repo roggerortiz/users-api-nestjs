@@ -5,20 +5,23 @@ export type RecordLogDocument = HydratedDocument<RecordLog>;
 
 @Schema({ _id: false, versionKey: false })
 export class RecordLog {
-  @Prop({ default: false })
-  isDeleted: boolean;
+  @Prop({ required: true, default: new Date() })
+  createdAt!: Date;
 
-  @Prop({ default: new Date() })
-  createdAt: Date;
+  @Prop({ required: true })
+  createdBy!: number;
 
-  @Prop()
-  createdBy: number;
+  @Prop({ required: false })
+  modifiedAt?: Date;
 
-  @Prop()
-  modifiedAt: Date;
+  @Prop({ required: false })
+  modifiedBy?: number;
 
-  @Prop()
-  modifiedBy: number;
+  @Prop({ required: false, default: false })
+  isDeleted: boolean = false;
+
+  @Prop({ required: false })
+  deletionReason?: string;
 }
 
 export const RecordLogSchema = SchemaFactory.createForClass(RecordLog);

@@ -6,10 +6,10 @@ export type PasswordLogDocument = HydratedDocument<PasswordLog>;
 @Schema({ _id: false, versionKey: false })
 export class PasswordLog {
   @Prop({ required: true })
-  password: Buffer;
+  password!: Buffer;
 
   @Prop({ required: true, default: new Date() })
-  changedAt: Date;
+  changedAt!: Date;
 }
 
 export const PasswordLogSchema = SchemaFactory.createForClass(PasswordLog);

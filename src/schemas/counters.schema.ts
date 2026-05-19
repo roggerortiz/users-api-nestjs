@@ -6,10 +6,10 @@ export type CounterDocument = HydratedDocument<Counter>;
 @Schema({ _id: false, versionKey: false })
 export class Counter {
   @Prop({ required: true, unique: true })
-  key: string;
+  key!: string;
 
   @Prop({ required: true })
-  value: number;
+  value!: number;
 }
 
 export const CounterSchema = SchemaFactory.createForClass(Counter);

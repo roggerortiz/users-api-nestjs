@@ -5,37 +5,51 @@ import { RecordLog, RecordLogSchema } from './record-logs.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema({ versionKey: false })
+@Schema({
+  versionKey: false,
+  toJSON: {
+    transform: (_, ret: any) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.password;
+      delete ret.salt;
+      delete ret.token;
+      delete ret.passwordLogs;
+      delete ret.recordLog;
+      return ret;
+    },
+  },
+})
 export class User {
   @Prop({ required: true })
-  userId: number;
+  userId!: number;
 
   @Prop({ required: true })
-  givenName: string;
+  givenName!: string;
 
   @Prop({ required: true })
-  familyName: string;
+  familyName!: string;
 
   @Prop({ required: true, unique: true })
-  email: string;
+  email!: string;
 
   @Prop({ required: true })
-  password: Buffer;
+  password!: Buffer;
 
   @Prop({ required: true })
-  salt: string;
+  salt!: string;
 
-  @Prop()
-  token: string;
+  @Prop({ required: false })
+  token?: string;
 
   @Prop({ required: true })
-  accountStateId: number;
+  accountStateId!: number;
 
   @Prop({ schema: [PasswordLogSchema], required: true })
-  passwordLogs: PasswordLog[];
+  passwordLogs!: PasswordLog[];
 
   @Prop({ schema: RecordLogSchema, required: true })
-  recordLog: RecordLog;
+  recordLog!: RecordLog;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
